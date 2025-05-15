@@ -1,13 +1,17 @@
 # NCHU library MCP Tutorial
+### 此筆記連結：https://reurl.cc/XA9QGE
 
 ## 下載
 - 下載 [此連結](https://github.com/Rui0828/mcp_auto_setup_NCHU_library/archive/refs/heads/main.zip) 內的檔案
+    > 備用連結：
+    > 1. https://github.com/Rui0828/mcp_auto_setup_NCHU_library/tree/main
+    > 2. https://drive.google.com/file/d/1904pvKNqv8MGJY2ntmOrwTaqkKKUQ72J/view?usp=drive_link
 
 ## 解壓縮
-![Image](https://i.imgur.com/4Du6ZH8.png =500x)
+<img src="https://i.imgur.com/4Du6ZH8.png" width=500>
 
 ## 執行 `setup.bat`
-- ![Image](https://i.imgur.com/gFngLMm.png =300x)
+- <img src="https://i.imgur.com/gFngLMm.png" width=300>
 
 
 - 看到 `All steps completed successfully!` 代表安裝成功了
@@ -28,4 +32,4 @@
 
 ## 效果
 ![Image](https://i.imgur.com/3vI6lP1.png)
-![uploading...](http://i.imgur.com/uploading.png)![Image](https://i.imgur.com/1paUr37.png)
+![Image](https://i.imgur.com/1paUr37.png)
