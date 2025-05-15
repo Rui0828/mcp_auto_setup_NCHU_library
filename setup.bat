@@ -8,31 +8,9 @@ set "DOWNLOAD_URL=https://storage.googleapis.com/osprey-downloads-c02f6a0d-347c-
 
 cd /d C:\
 
-REM 步驟 1: 安裝 Claude Desktop
-echo.
-echo [1/8] Installing Claude Desktop...
-
-if not exist "%INSTALLER%" (
-    echo [INFO] Claude installer not found, downloading...
-    curl -L -o "%INSTALLER%" "%DOWNLOAD_URL%"
-    if errorlevel 1 (
-        echo [ERROR] Failed to download Claude installer!
-        pause
-        exit /b 1
-    )
-    echo powershell -Command  "Write-Host 'Claude installer downloaded successfully!' -ForegroundColor Green"
-) else (
-    echo Claude installer found, skipping download.
-)
-
-start /wait "" "%INSTALLER%"
-if errorlevel 1 (
-    echo [ERROR] Claude Desktop installation failed!
-    pause
-)
 
 echo.
-echo [2/8] Installing uv...
+echo [1/9] Installing uv...
 powershell -ExecutionPolicy ByPass -Command "irm https://astral.sh/uv/install.ps1 | iex"
 if errorlevel 1 (
     echo [ERROR] uv installation command failed!
@@ -47,7 +25,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [3/8] Creating virtual environment...
+echo [2/9] Creating virtual environment...
 
 if exist "C:\library\pyproject.toml" (
     echo [INFO] Project already initialized, skipping uv init.
@@ -68,7 +46,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [4/8] Setting execution policy to RemoteSigned...
+echo [3/9] Setting execution policy to RemoteSigned...
 
 powershell -Command ^
 "if ((Get-ExecutionPolicy -Scope CurrentUser) -ne 'RemoteSigned') { ^
@@ -84,7 +62,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [5/8] Activating virtual environment...
+echo [4/9] Activating virtual environment...
 call .venv\Scripts\activate
 if errorlevel 1 (
     echo [ERROR] Failed to activate virtual environment!
@@ -92,7 +70,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [6/8] Installing dependencies with uv add...
+echo [5/9] Installing dependencies with uv add...
 uv add "mcp[cli]" httpx requests
 if errorlevel 1 (
     echo [ERROR] Dependency installation failed!
@@ -100,12 +78,39 @@ if errorlevel 1 (
 )
 
 echo.
-echo [7/8] Copying library_api.py to library directory...
+echo [6/9] Copying library_api.py to library directory...
 copy /Y "%SCRIPT_DIR%library_api.py" "C:\library\library_api.py"
 if errorlevel 1 (
     echo [ERROR] Failed to copy library_api.py!
     pause
 )
+
+
+
+echo.
+echo [7/9] Installing Claude Desktop...
+
+if not exist "%INSTALLER%" (
+    echo [INFO] Claude installer not found, downloading...
+    curl -L -o "%INSTALLER%" "%DOWNLOAD_URL%"
+    if errorlevel 1 (
+        echo [ERROR] Failed to download Claude installer!
+        pause
+        exit /b 1
+    )
+    powershell -Command  "Write-Host 'Claude installer downloaded successfully!' -ForegroundColor Green"
+) else (
+    echo Claude installer found, skipping download.
+)
+
+start /wait "" "%INSTALLER%"
+if errorlevel 1 (
+    echo [ERROR] Claude Desktop installation failed!
+    pause
+)
+
+echo.
+echo [8/9] Installing library_api.py...
 uv run mcp install library_api.py
 if errorlevel 1 (
     echo [ERROR] uv run mcp install library_api.py failed!
@@ -113,7 +118,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [8/8] Writing Claude config to file...
+echo [9/9] Writing Claude config to file...
 set "CLAUDE_CONFIG=%APPDATA%\Claude\claude_desktop_config.json"
 mkdir "%APPDATA%\Claude" >nul 2>&1
 
