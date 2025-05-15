@@ -49,7 +49,7 @@ if errorlevel 1 (
 
 echo.
 echo [3/9] Setting execution policy to RemoteSigned...
-powershell -ExecutionPolicy Bypass -Command ^
+powershell -Command ^
 "if ((Get-ExecutionPolicy -Scope CurrentUser) -ne 'RemoteSigned') { ^
     Write-Host 'Setting execution policy to RemoteSigned...'; ^
     Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force ^
