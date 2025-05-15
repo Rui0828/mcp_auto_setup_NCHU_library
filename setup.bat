@@ -12,11 +12,9 @@ cd /d C:\
 echo.
 echo [1/9] Installing uv...
 powershell -ExecutionPolicy Bypass -Command "irm https://astral.sh/uv/install.ps1 | iex"
-if errorlevel 1 (
-    echo [ERROR] uv installation command failed!
-    pause
-    exit /b 1
-)
+
+REM === Add uv install location to PATH immediately ===
+set "PATH=%USERPROFILE%\.local\bin;%PATH%"
 
 where uv >nul 2>&1
 if errorlevel 1 (
@@ -31,7 +29,7 @@ echo [2/9] Creating virtual environment...
 if exist "%PROJECT_DIR%\pyproject.toml" (
     echo [INFO] Project already initialized, skipping uv init.
 ) else (
-    mkdir "%PROJECT_DIR%"
+    mkdir "%PROJECT_DIR%" >nul 2>&1
     cd /d "%PROJECT_DIR%"
     uv init
     if errorlevel 1 (
