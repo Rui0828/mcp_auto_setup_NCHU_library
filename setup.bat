@@ -94,7 +94,8 @@ if not exist "%INSTALLER%" (
         pause
         exit /b 1
     )
-    powershell -Command "Write-Host 'Claude installer downloaded successfully!' -ForegroundColor Green"
+    echo [INFO] Download complete.
+    echo Waiting for Claude installer...
 ) else (
     echo Claude installer found, skipping download.
 )
